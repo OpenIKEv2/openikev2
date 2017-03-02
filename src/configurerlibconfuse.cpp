@@ -65,11 +65,11 @@ ConfigurerLibConfuse::ConfigurerLibConfuse( string filename, LogImplOpenIKE& log
         CFG_STR( "vendor_id", ( char* ) vendor_id.c_str(), CFGF_NONE ),
 #ifdef EAP_SERVER_ENABLED
         CFG_BOOL( "radvd_enabled", cfg_false, CFGF_NONE ),
-	CFG_STR( "radvd_config_file", "/etc/radvd.conf", CFGF_NONE ),	
+	CFG_STR( "radvd_config_file", "/etc/radvd.conf", CFGF_NONE ),
 #endif
         CFG_BOOL( "mobility", cfg_false, CFGF_NONE ),
         CFG_BOOL( "is_ha", cfg_false, CFGF_NONE ),
-	CFG_STR( "home_address", "", CFGF_NONE ),	
+	CFG_STR( "home_address", "", CFGF_NONE ),
 
         CFG_END()
     };
@@ -153,7 +153,7 @@ ConfigurerLibConfuse::ConfigurerLibConfuse( string filename, LogImplOpenIKE& log
         CFG_STR_LIST( "auth_verifiers", "{}", CFGF_NONE ),
         CFG_STR_LIST( "eap_clients", "{}", CFGF_NONE ),
         CFG_STR_LIST( "eap_servers", "{}", CFGF_NONE ),
-        CFG_STR( "aaa_protocol", "", CFGF_NONE ),        
+        CFG_STR( "aaa_protocol", "", CFGF_NONE ),
         CFG_STR( "my_preshared_key", "", CFGF_NONE ),
         CFG_STR( "peer_preshared_key", "", CFGF_NODEFAULT ),
         CFG_STR( "eap_md5_user_db", "", CFGF_NONE ),
@@ -299,7 +299,7 @@ auto_ptr<GeneralConfiguration> ConfigurerLibConfuse::getGeneralConfiguration( ) 
     string radvd_config_file = cfg_getstr ( current, "radvd_config_file" );
     //cout << "radvd_config_file=" << radvd_config_file << endl;
     general_configuration->attributemap->addAttribute( "radvd_config_file", auto_ptr<Attribute> ( new StringAttribute( radvd_config_file ) ) );
-#endif    
+#endif
 
     bool mobility = cfg_getbool ( current, "mobility" );
     bool is_ha = cfg_getbool ( current, "is_ha" );
@@ -602,12 +602,12 @@ auto_ptr<IkeSaConfiguration> ConfigurerLibConfuse::getIkeSaConfiguration( cfg_t 
             ike_sa_configuration->aaa_server_addr = cfg_getstr( current, "aaa_server_addr" );
             ike_sa_configuration->aaa_server_port = cfg_getint( current, "aaa_server_port" );
             ike_sa_configuration->aaa_server_secret = cfg_getstr( current, "aaa_server_secret" );
-           
+
         }
         else if ( aaa_protocol != "" )
             throw Exception( "Unknown AAA protocol: " + aaa_protocol );
 
-    
+
     // Read Eap authentication method
     for ( uint16_t i = 0; i < cfg_size( current, "eap_servers" ); i++ ) {
 
@@ -617,7 +617,7 @@ auto_ptr<IkeSaConfiguration> ConfigurerLibConfuse::getIkeSaConfiguration( cfg_t 
             authenticator->registerEapServer( auto_ptr<EapServer> ( new EapServerMd5( eap_md5_user_db ) ) );
         }
         else if ( eap_server_str == "eap_radius" ) {
-            
+
             authenticator->registerEapServer( auto_ptr<EapServer> ( new EapServerRadius( ike_sa_configuration->aaa_server_addr, ike_sa_configuration->aaa_server_port, ike_sa_configuration->aaa_server_secret ) ) );
         }
         else if ( eap_server_str == "eap_frm" ) {
@@ -633,9 +633,9 @@ auto_ptr<IkeSaConfiguration> ConfigurerLibConfuse::getIkeSaConfiguration( cfg_t 
 
 
 
-    
 
-    
+
+
 #endif
     ike_sa_configuration->retransmition_time = cfg_getint( current, "retransmition_time" );
     ike_sa_configuration->max_idle_time = cfg_getint( current, "max_idle_time" );
@@ -1180,7 +1180,7 @@ auto_ptr< AuthGeneratorPsk > ConfigurerLibConfuse::getAuthGeneratorPsk( cfg_t * 
     fread( preshared_key, 1, preshared_key_len, stream );
     fclose( stream );
 
-    return auto_ptr<AuthGeneratorPsk> ( new AuthGeneratorPsk( auto_ptr<ByteArray> ( new ByteArray( preshared_key, preshared_key_len, true ) ) ) );
+    return auto_ptr<AuthGeneratorPsk> ( new AuthGeneratorPsk( auto_ptr<ByteArray> ( new ByteArray( preshared_key, preshared_key_len, 0, true ) ) ) );
 }
 
 auto_ptr< AuthVerifierPsk > ConfigurerLibConfuse::getAuthVerifierPsk( cfg_t * current ) {
@@ -1199,7 +1199,7 @@ auto_ptr< AuthVerifierPsk > ConfigurerLibConfuse::getAuthVerifierPsk( cfg_t * cu
     fread( preshared_key, 1, preshared_key_len, stream );
     fclose( stream );
 
-    return auto_ptr<AuthVerifierPsk> ( new AuthVerifierPsk( auto_ptr<ByteArray> ( new ByteArray( preshared_key, preshared_key_len, true ) ) ) );
+    return auto_ptr<AuthVerifierPsk> ( new AuthVerifierPsk( auto_ptr<ByteArray> ( new ByteArray( preshared_key, preshared_key_len, 0, true ) ) ) );
 }
 
 
