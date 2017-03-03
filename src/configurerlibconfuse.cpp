@@ -238,8 +238,8 @@ ConfigurerLibConfuse::ConfigurerLibConfuse( string filename, LogImplOpenIKE& log
     // POLICIES SECTION FORMAT
     cfg_opt_t policies_format[] = {
         CFG_SEC( "policy", policy_format, CFGF_MULTI ),
-        CFG_BOOL( "flush_before", cfg_false, CFGF_NONE ),
-        CFG_BOOL( "flush_on_close", cfg_false, CFGF_NONE ),
+        CFG_BOOL( "flush_before", cfg_true, CFGF_NONE ),
+        CFG_BOOL( "flush_on_close", cfg_true, CFGF_NONE ),
         CFG_BOOL( "generate_allow_policies", cfg_true, CFGF_NONE ),
         CFG_END()
     };
