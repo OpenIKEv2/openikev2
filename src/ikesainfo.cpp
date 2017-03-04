@@ -1,7 +1,7 @@
 /***************************************************************************
  *   Copyright (C) 2005 by                                                 *
- *   Pedro J. Fernandez Ruiz    pedroj.fernandez@dif.um.es                 *
- *   Alejandro Perez Mendez     alejandro_perez@dif.um.es                  *
+ *   Pedro J. Fernandez Ruiz    pedroj@um.es                               *
+ *   Alejandro Perez Mendez     alex@um.es                                 *
  *                                                                         *
  *   This library is free software; you can redistribute it and/or         *
  *   modify it under the terms of the GNU Lesser General Public            *
@@ -33,7 +33,7 @@ void IkeSaInfo::updateInfo ( const IkeSa & ike_sa ) {
     this->my_addr = ike_sa.my_addr->getIpAddress().clone();
     this->peer_addr = ike_sa.peer_addr->getIpAddress().clone();
     this->my_spi = ike_sa.my_spi;
-    this->peer_spi = ike_sa.peer_spi;    
+    this->peer_spi = ike_sa.peer_spi;
 }
 
 IkeSaInfo::~IkeSaInfo() {
@@ -63,7 +63,7 @@ auto_ptr< IkeSaInfo > IkeSaInfo::parse ( ByteBuffer & byte_buffer ) {
 
     byte_buffer.readBuffer(8, &result->my_spi);
     byte_buffer.readBuffer(8, &result->peer_spi);
-    
+
     return result;
 }
 

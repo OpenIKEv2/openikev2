@@ -1,7 +1,7 @@
 /***************************************************************************
 *   Copyright (C) 2005 by                                                 *
-*   Pedro J. Fernandez Ruiz    pedroj.fernandez@dif.um.es                 *
-*   Alejandro Perez Mendez     alejandro_perez@dif.um.es                  *
+*   Pedro J. Fernandez Ruiz    pedroj@um.es                               *
+*   Alejandro Perez Mendez     alex@um.es                                 *
 *                                                                         *
 *   This library is free software; you can redistribute it and/or         *
 *   modify it under the terms of the GNU Lesser General Public            *
@@ -72,19 +72,19 @@ class ConfigurerLibConfuse {
         auto_ptr<Proposal> getIpsecProposal( cfg_t *current, Enums::PROTOCOL_ID proto );
 
         /**
-         * Parses an ID subsection 
+         * Parses an ID subsection
          * @param current Current context
          * @return A new ID object
          */
         auto_ptr<ID> getId( cfg_t* current );
-        
+
         /**
-         * Parses an ID subsection 
+         * Parses an ID subsection
          * @param current Current context
          * @return A new ID object
          */
         auto_ptr<IdTemplate> getIdTemplate( cfg_t* current );
-        
+
         /**
          * Parses an IKE configuration subsection
          * @param current Current context
@@ -112,11 +112,11 @@ class ConfigurerLibConfuse {
          * @return A new CertificateController_OpenIKE object
          */
         auto_ptr<AuthVerifierCert> getAuthVerifierCert( cfg_t* current );
-        
+
         auto_ptr<AuthGeneratorCert> getAuthGeneratorCert( cfg_t* current );
 
         auto_ptr<AuthGeneratorPsk> getAuthGeneratorPsk(  cfg_t* current );
-        
+
         auto_ptr<AuthVerifierPsk> getAuthVerifierPsk(  cfg_t* current );
 
         /**
@@ -125,7 +125,7 @@ class ConfigurerLibConfuse {
         void setLogConfiguration( LogImplOpenIKE& log);
 
         void parsePolicies();
-    
+
     public:
 
         /**

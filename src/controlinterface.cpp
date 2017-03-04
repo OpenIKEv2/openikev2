@@ -1,7 +1,7 @@
 /***************************************************************************
  *   Copyright (C) 2005 by                                                 *
- *   Pedro J. Fernandez Ruiz    pedroj.fernandez@dif.um.es                 *
- *   Alejandro Perez Mendez     alejandro_perez@dif.um.es                  *
+ *   Pedro J. Fernandez Ruiz    pedroj@um.es                               *
+ *   Alejandro Perez Mendez     alex@um.es                                 *
  *                                                                         *
  *   This library is free software; you can redistribute it and/or         *
  *   modify it under the terms of the GNU Lesser General Public            *
@@ -69,10 +69,10 @@ void ControlInterface::notifyBusEvent ( const BusEvent & event ) {
             if (it == this->ike_sa_info_collection.end()) {
                 pair<uint64_t, IkeSaInfo*> new_pair ( ike_sa_event->ike_sa.my_spi, new IkeSaInfo ( ike_sa_event->ike_sa ) );
                 this->ike_sa_info_collection.insert ( new_pair );
-	    } 
+	    }
 
             it = this->ike_sa_info_collection.find ( ike_sa_event->ike_sa.my_spi );
-	
+
 	    assert ( it != this->ike_sa_info_collection.end() );
             it->second->updateInfo ( ike_sa_event->ike_sa );
         }

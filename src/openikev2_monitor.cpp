@@ -1,7 +1,7 @@
 /***************************************************************************
  *   Copyright (C) 2005 by                                                 *
- *   Pedro J. Fernandez Ruiz    pedroj.fernandez@dif.um.es                 *
- *   Alejandro Perez Mendez     alejandro_perez@dif.um.es                  *
+ *   Pedro J. Fernandez Ruiz    pedroj@um.es                               *
+ *   Alejandro Perez Mendez     alex@um.es                                 *
  *                                                                         *
  *   This library is free software; you can redistribute it and/or         *
  *   modify it under the terms of the GNU Lesser General Public            *
@@ -46,7 +46,7 @@ int main ( int argc, char *argv[] ) {
         cout << "Usage: " << argv[0] << " address" << endl;
         exit(1);
     }
-    
+
     // Loads the controllers
     auto_ptr<ThreadControllerImplPosix> thread_controller_posix ( new ThreadControllerImplPosix() );
     ThreadController::setImplementation ( thread_controller_posix.get() );
@@ -60,7 +60,7 @@ int main ( int argc, char *argv[] ) {
 
     SocketAddressPosix src (auto_ptr<IpAddress> (new IpAddressOpenIKE ( "0.0.0.0" ) ), 6000 );
     SocketAddressPosix dst (auto_ptr<IpAddress> (new IpAddressOpenIKE ( argv[1] ) ), 12345 );
-    UdpSocket udp_socket;    
+    UdpSocket udp_socket;
     udp_socket.bind( src );
 
     while ( true ) {
@@ -70,7 +70,7 @@ int main ( int argc, char *argv[] ) {
             udp_socket.send ( src, dst, *request );
 
             auto_ptr<SocketAddress> src2, dst2;
-            auto_ptr<ByteArray> response = udp_socket.receive ( src2, dst2, 1000 );            
+            auto_ptr<ByteArray> response = udp_socket.receive ( src2, dst2, 1000 );
             system ( "clear" );
 
             ByteBuffer response_buffer ( *response );
@@ -79,7 +79,7 @@ int main ( int argc, char *argv[] ) {
                 uint16_t num_of_ikesas = response_buffer.readInt16();
                 cout << "OpenIKEv2 running on: " << src2->toString() << endl;
                 cout << "Number of active IKE_SAS: " << num_of_ikesas << endl;
-                for ( uint16_t i=0; i< num_of_ikesas; i++ ) {		    
+                for ( uint16_t i=0; i< num_of_ikesas; i++ ) {
                     auto_ptr<IkeSaInfo> ike_sa_info = IkeSaInfo::parse ( response_buffer );
 
                     string result = UtilsImpl::getPaddedString ( ike_sa_info->my_addr->toString(), 50, true, ' ' ) + "  <====================================>  " + ike_sa_info->peer_addr->toString() + "\n";
