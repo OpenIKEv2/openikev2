@@ -235,10 +235,10 @@ int main ( int argc, char *argv[] ) {
 
         IpsecController::setImplementation ( ipsec_controller.get() );
 
-	// Parse configuration file        
+	// Parse configuration file
 	auto_ptr<ConfigurerLibConfuse> configurer ( new ConfigurerLibConfuse ( configuration_filename, *log_impl_openike ) );
 
-#ifdef EAP_SERVER_ENABLED	
+#ifdef EAP_SERVER_ENABLED
 	// Start radvd functionality
 	network_controller_openike.get()->startRadvd();
 #endif
@@ -247,7 +247,7 @@ int main ( int argc, char *argv[] ) {
         Configuration::getInstance().getGeneralConfiguration();
 
 
-        
+
         ipsec_controller->printPolicies();
 
         //************************************************
@@ -312,21 +312,9 @@ int main ( int argc, char *argv[] ) {
 }
 
 void finalice() {
-
     unlink ( "/var/run/openikev2.pid" );
-    
-    auto_ptr<GeneralConfiguration> general_conf = Configuration::getInstance().getGeneralConfiguration();
-
-    bool flush_on_close = false;
-    BoolAttribute* flush_on_close_attr = general_conf->attributemap->getAttribute<BoolAttribute>( "flush_on_close" );
-    if (flush_on_close_attr  != NULL )
-        flush_on_close = flush_on_close_attr->value;
-    if ( flush_on_close ) {
-        IpsecController::flushIpsecPolicies();
-        IpsecController::flushIpsecSas();
-    }
-
-
+    IpsecController::flushIpsecPolicies();
+    IpsecController::flushIpsecSas();
     Log::writeLockedMessage ( "OpenIKEv2", "Stopped", Log::LOG_THRD, true );
 }
 
